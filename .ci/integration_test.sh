@@ -234,6 +234,8 @@ integration_std()
     execute_cmd "bash tools/download_solc.sh -v 0.6.10"
 
     bash tools/download_solc.sh
+    ls -h build_chain.sh
+    cat build_chain.sh
     bash build_chain.sh -v "${latest_version}" -l 127.0.0.1:2 -o nodes
     bash nodes/127.0.0.1/start_all.sh && sleep "${start_time}"
     cp nodes/127.0.0.1/sdk/* ./conf/
