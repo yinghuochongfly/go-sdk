@@ -196,8 +196,10 @@ EOF
 get_build_chain()
 {
     latest_version=$(curl -sS https://gitee.com/api/v5/repos/FISCO-BCOS/FISCO-BCOS/tags | grep -oe "\"name\":\"v[2-9]*\.[0-9]*\.[0-9]*\"" | cut -d \" -f 4 | sort -V | tail -n 1)
+
     curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/"${latest_version}"/build_chain.sh && chmod u+x build_chain.sh
     curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/"${latest_version}"/build_chain.sh && chmod u+x build_chain.sh
+    LOG_INFO "get_build_chain....."
 }
 
 get_csdk_lib()
@@ -231,6 +233,7 @@ integration_std()
     LOG_INFO "integration_std testing..."
     execute_cmd "bash tools/download_solc.sh -v 0.6.10"
 
+    bash tools/download_solc.sh
     bash build_chain.sh -v "${latest_version}" -l 127.0.0.1:2 -o nodes
     bash nodes/127.0.0.1/start_all.sh && sleep "${start_time}"
     cp nodes/127.0.0.1/sdk/* ./conf/
